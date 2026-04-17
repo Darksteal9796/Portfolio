@@ -18,10 +18,47 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://gautamjoshi.dev";
+
+const SITE_DESCRIPTION =
+  "LLM systems in production: RAG pipelines, fine-tuned models, voice agents. Four years of production code.";
+
 export const metadata: Metadata = {
-  title: "Gautam Joshi — Senior AI Full-Stack Engineer",
-  description:
-    "LLM systems in production: RAG pipelines, fine-tuned models, voice agents. Four years of production code.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Gautam Joshi — Senior AI Full-Stack Engineer",
+    template: "%s — Gautam Joshi",
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: "gautamjoshi.dev",
+  authors: [{ name: "Gautam Joshi" }],
+  creator: "Gautam Joshi",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "gautamjoshi.dev",
+    title: "Gautam Joshi — Senior AI Full-Stack Engineer",
+    description: SITE_DESCRIPTION,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gautam Joshi — Senior AI Full-Stack Engineer",
+    description: SITE_DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 // Runs before hydration to prevent a flash of the wrong theme.

@@ -1,3 +1,4 @@
+import { JsonLd } from "@/components/JsonLd";
 import { ContactTile } from "@/components/tiles/ContactTile";
 import { ExperienceTile } from "@/components/tiles/ExperienceTile";
 import { GithubTile } from "@/components/tiles/GithubTile";
@@ -14,6 +15,37 @@ import { getAllCaseStudies } from "@/lib/case-studies";
 
 const FEATURED_SLUGS = ["autonomous-revenue-engine", "ai-best-buddy"];
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://gautamjoshi.dev";
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Gautam Joshi",
+  jobTitle: "Senior AI Full-Stack Engineer",
+  url: SITE_URL,
+  sameAs: [
+    "https://github.com/darksteal9796",
+    "https://linkedin.com/in/gautam-joshi-9796",
+  ],
+  knowsAbout: [
+    "LLMs",
+    "RAG",
+    "Fine-tuning",
+    "Python",
+    "React",
+    "AWS",
+    "Voice agents",
+  ],
+  worksFor: { "@type": "Organization", name: "Turing" },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Pune",
+    addressCountry: "IN",
+  },
+};
+
 export default async function Home() {
   const all = await getAllCaseStudies();
   const featured = FEATURED_SLUGS.map((slug) =>
@@ -22,6 +54,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen px-6 py-8 lg:px-8 lg:py-12">
+      <JsonLd data={personJsonLd} />
       <div className="mx-auto flex max-w-[1280px] flex-col gap-8">
         <header className="flex items-center justify-between">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">

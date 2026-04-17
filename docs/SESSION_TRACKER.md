@@ -21,7 +21,7 @@ Kickoff: 2026-04-18 · Target: 4 weeks · Spec: [docs/specs/personal-website-spe
 | P7 | Project cards + case study pages | completed | 10 | med | next-mdx-remote (contentlayer2 abandoned). gray-matter frontmatter. 4 MDX seeds. /work/[slug] statically pre-rendered (SSG). CSS view-transition-name for shared-element morph (modern, no Framer Motion layoutId complexity) |
 | P8 | Contact form | completed | 7 | med | zod schema shared client+server, in-memory rate-limit 5/hr/IP, Resend (no-op when RESEND_API_KEY missing), honeypot field, success/error inline states |
 | P9 | Command palette (⌘K) | completed | 3 | low | cmdk via shadcn CommandDialog; keyboard handler at layout level; sections + case studies + theme + resume. cmdk internals flaky in jsdom — keyboard-open test reduced to mount-sanity |
-| P10 | SEO, sitemap, OG images | pending | ~5 | low | next-sitemap + ImageResponse |
+| P10 | SEO, sitemap, OG images | completed | 7 | low | Native Next 16 sitemap/robots conventions (no next-sitemap dep). Dynamic OG via ImageResponse. Person + CreativeWork JSON-LD. metadataBase + canonical. |
 | P11 | Analytics | pending | ~3 | low | Vercel Analytics SDK + Plausible script |
 | P12 | Performance pass | pending | ~2 | med | Lighthouse CI in GH Actions |
 | P13 | Accessibility pass | pending | ~3 | low | axe + NVDA walkthrough |

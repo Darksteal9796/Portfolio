@@ -4,13 +4,19 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { JsonLd } from "@/components/JsonLd";
 import {
   getAllCaseStudies,
   getCaseStudyBySlug,
   getCaseStudySlugs,
+  type CaseStudyFrontmatter,
 } from "@/lib/case-studies";
 
 type Params = { slug: string };
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  "https://gautamjoshi.dev";
 
 export async function generateStaticParams(): Promise<Params[]> {
   const slugs = await getCaseStudySlugs();
@@ -25,9 +31,36 @@ export async function generateMetadata({
   const { slug } = await params;
   const study = await getCaseStudyBySlug(slug);
   if (!study) return {};
+  const canonical = `/work/${slug}`;
+  const title = study.frontmatter.title;
   return {
-    title: `${study.frontmatter.title} — Gautam Joshi`,
+    title,
     description: study.frontmatter.summary,
+    alternates: { canonical },
+    openGraph: {
+      type: "article",
+      url: `${SITE_URL}${canonical}`,
+      title,
+      description: study.frontmatter.summary,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: study.frontmatter.summary,
+    },
+  };
+}
+
+function creativeWorkJsonLd(fm: CaseStudyFrontmatter) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: fm.title,
+    description: fm.summary,
+    url: `${SITE_URL}/work/${fm.slug}`,
+    author: { "@type": "Person", name: "Gautam Joshi", url: SITE_URL },
+    keywords: fm.stack.join(", "),
+    dateCreated: fm.period,
   };
 }
 
@@ -50,6 +83,7 @@ export default async function CaseStudyPage({
 
   return (
     <main className="min-h-screen px-6 py-8 lg:px-8 lg:py-12">
+      <JsonLd data={creativeWorkJsonLd(study.frontmatter)} />
       <article className="mx-auto max-w-3xl">
         <Link
           href="/#projects"
