@@ -1,2 +1,9 @@
 # Timestamped progress log. Append-only.
 # Format: YYYY-MM-DD HH:MM  |  <action>
+2026-04-18 02:05  |  /recon — wrote docs/RECON_REPORT.md for empty scaffold
+2026-04-18 02:12  |  P0 completed — Next 16.2.4 + Tailwind v4 + shadcn/ui scaffold in Portfolio root (commit pending)
+2026-04-18 02:20  |  /change populated SESSION_TRACKER.md + CHANGE_IMPLEMENTATION_PLAN.md with P0–P15 chunks
+2026-04-18 02:25  |  P1 completed — design tokens (spec hex palette), Geist fonts wired, ThemeProvider (useSyncExternalStore) + ThemeToggle + no-flash script. Lint + build clean.
+2026-04-18 02:30  |  P1 review — applied 2 should-fix items: useMemo wrap on ThemeProvider value + --destructive hex conversion.
+2026-04-18 02:32  |  /test — added vitest + RTL + jsdom; 12 tests for ThemeProvider + ThemeToggle, all green (805ms).
+2026-04-18 02:35  |  P2 completed — BentoGrid + BentoTile primitives, /design preview page, 6 BentoTile tests. 18/18 tests green. Build adds /design static route.
