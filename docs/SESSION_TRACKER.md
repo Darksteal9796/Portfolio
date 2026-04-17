@@ -17,8 +17,8 @@ Kickoff: 2026-04-18 · Target: 4 weeks · Spec: [docs/specs/personal-website-spe
 | P3 | Hero + WebGL particle field | completed | 7 | med | R3F dynamic + desktop + reduced-motion gate; needed @types/three; particle positions at module scope (purity lint) |
 | P4 | Static tiles (Now, Stack, Location, Resume) | completed | 8 | low | marked + @icons-pack/react-simple-icons added; AWS/Twilio use lucide fallbacks; 531B placeholder resume.pdf generated; TooltipProvider wired at layout |
 | P5 | GitHub tile (server, cached) | completed | 2 | med | REST events + GraphQL contribs, dual fetch w/ revalidate 3600. Graceful fallback when GITHUB_TOKEN missing. Lucide dropped Github icon → SiGithub fallback |
-| P6 | Experience timeline (GSAP) | pending | ~2 | med | ScrollTrigger pin, mobile fallback |
-| P7 | Project cards + case study pages | pending | ~8 | med | MDX via contentlayer2 OR next-mdx-remote — check N16 compat |
+| P6 | Experience timeline (GSAP) | completed | 3 | med | GSAP ScrollTrigger pin on desktop, vertical stack fallback on mobile + reduced-motion. Full-width section (not BentoTile child) to avoid pin-in-grid layout bugs |
+| P7 | Project cards + case study pages | completed | 10 | med | next-mdx-remote (contentlayer2 abandoned). gray-matter frontmatter. 4 MDX seeds. /work/[slug] statically pre-rendered (SSG). CSS view-transition-name for shared-element morph (modern, no Framer Motion layoutId complexity) |
 | P8 | Contact form | pending | ~3 | med | Resend + in-memory rate-limit |
 | P9 | Command palette (⌘K) | pending | ~2 | low | cmdk already installed |
 | P10 | SEO, sitemap, OG images | pending | ~5 | low | next-sitemap + ImageResponse |

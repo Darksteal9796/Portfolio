@@ -1,0 +1,34 @@
+---
+title: "AI Best Buddy"
+slug: "ai-best-buddy"
+role: "Solo builder"
+period: "2025 — Present"
+stack: ["Python", "Django", "LangChain", "Sentiment Analysis"]
+summary: "Conversational AI that reads sentiment in real time and adapts tone per turn."
+cover: "/projects/ai-best-buddy-cover.png"
+metrics:
+  - label: "Status"
+    value: "Active dev"
+  - label: "Tone axes"
+    value: "Energy · Warmth"
+  - label: "Per-turn latency"
+    value: "<800ms"
+---
+
+## Problem
+
+Most conversational AI apps feel flat because they don't adapt tone. Same response whether the user is upbeat or venting.
+
+## What I built
+
+A conversational AI app — Python, Django, LangChain — that reads sentiment in real time and adjusts response tone accordingly. A frustrated user gets a calmer, shorter reply. An excited user gets more energy back.
+
+## Stack
+
+- **LangChain** for LLM orchestration — swappable model backend.
+- **Sentiment analysis** running per-turn, feeding a tone-control layer before generation.
+- **Prompt engineering** to enforce consistency — the model can't drift off-character mid-conversation.
+
+## State
+
+Active development since February 2025. Currently iterating on the tone-control layer — the hard part is distinguishing "excited" from "frustrated-but-trying-to-sound-polite".

@@ -1,0 +1,36 @@
+---
+title: "Autonomous Revenue Engine"
+slug: "autonomous-revenue-engine"
+role: "Lead Engineer"
+period: "2024 — 2025"
+stack: ["Python", "Twilio", "Retell AI", "N8N", "RAG", "AWS"]
+summary: "AI voice sales agent. End-to-end pipeline, production deploy. Hands reps qualified leads."
+cover: "/projects/are-cover.png"
+metrics:
+  - label: "Calls / day"
+    value: "Confidential"
+  - label: "Avg turn latency"
+    value: "<600ms"
+  - label: "Languages"
+    value: "4"
+---
+
+## Problem
+
+B2B sales reps spend hours on outreach that half the time misses the mark. Generic sequences. No context on what the prospect actually did. Revenue suffers, reps burn out.
+
+## What I built
+
+An AI voice sales agent that runs the full pipeline — pitch, objection handling, qualification, post-call follow-up — and hands reps warm, qualified leads. Twilio for voice infrastructure, a conversation intelligence layer for personalised pitching, N8N for orchestration, and a RAG layer so the agent speaks with context on each prospect.
+
+## Architecture
+
+- **Voice layer** — Twilio Programmable Voice for inbound/outbound call routing.
+- **Conversation intelligence** — Retell AI for real-time transcription, interruption handling, pitch control.
+- **Context layer** — RAG pipeline over prospect CRM data, company news, prior touches.
+- **Orchestration** — N8N workflows connecting voice output to CRM write-backs and follow-up email generation.
+- **Stack** — Python backend, Node/N8N for flows, Postgres for call logs, AWS for everything.
+
+## Results and what I'd do differently
+
+Shipped to production. Biggest lesson: **latency is the product**. Any pause over 600ms and the prospect notices it's an agent. Next iteration will use local streaming TTS to cut 300ms off every turn.
