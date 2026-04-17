@@ -20,12 +20,24 @@ type Contributions = {
   weeks: Day[][]; // last GRID_WEEKS weeks, each padded to 7 days (Sun→Sat)
 };
 
-type GhEventCommit = { sha: string; message: string };
 type GhEvent = {
   type: string;
   repo: { name: string };
   created_at: string;
-  payload: { commits?: GhEventCommit[] };
+  // Unauthenticated `/events/public` strips `payload.commits`, but keeps
+  // `payload.head` (SHA of the tip). Authenticated requests include commits.
+  payload: {
+    head?: string;
+    commits?: { sha: string; message: string }[];
+  };
+};
+
+type GhCommit = {
+  sha: string;
+  commit: {
+    message: string;
+    author?: { date?: string };
+  };
 };
 
 type GhContributionDay = { date: string; contributionCount: number };
@@ -64,16 +76,35 @@ async function fetchLatestCommit(): Promise<LatestCommit | null> {
     );
     if (!res.ok) return null;
     const events = (await res.json()) as GhEvent[];
-    const push = events.find(
-      (e) => e.type === "PushEvent" && (e.payload.commits?.length ?? 0) > 0,
-    );
+    const push = events.find((e) => e.type === "PushEvent");
     if (!push) return null;
-    const commits = push.payload.commits ?? [];
-    const latest = commits[commits.length - 1];
+
+    // Prefer the commit array when present (authenticated requests);
+    // otherwise fetch the head commit directly from the repo.
+    const embedded = push.payload.commits?.at(-1);
+    if (embedded) {
+      return {
+        message: embedded.message.split("\n")[0],
+        repo: push.repo.name,
+        date: push.created_at,
+      };
+    }
+
+    const sha = push.payload.head;
+    if (!sha) return null;
+    const commitRes = await fetch(
+      `https://api.github.com/repos/${push.repo.name}/commits/${sha}`,
+      {
+        headers: restHeaders(),
+        next: { revalidate: REVALIDATE_SECONDS },
+      },
+    );
+    if (!commitRes.ok) return null;
+    const commit = (await commitRes.json()) as GhCommit;
     return {
-      message: latest.message.split("\n")[0],
+      message: commit.commit.message.split("\n")[0],
       repo: push.repo.name,
-      date: push.created_at,
+      date: commit.commit.author?.date ?? push.created_at,
     };
   } catch {
     return null;

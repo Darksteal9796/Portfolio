@@ -54,8 +54,10 @@ export function ExperienceTile() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
+      // Minimum 600px of travel so the pin has real "weight" even on very wide
+      // viewports where cards + trailing spacer still barely exceed the section.
       const distance = () =>
-        Math.max(0, track.scrollWidth - section.clientWidth + 48);
+        Math.max(600, track.scrollWidth - section.clientWidth + 48);
 
       gsap.to(track, {
         x: () => -distance(),
@@ -99,23 +101,34 @@ export function ExperienceTile() {
           className="mt-8 flex gap-6 will-change-transform"
           style={{ width: "max-content" }}
         >
-          {ENTRIES.map((entry) => (
+          {ENTRIES.map((entry, i) => (
             <article
               key={entry.company}
-              className="flex w-[min(22rem,calc(100vw-5rem))] shrink-0 flex-col rounded-xl border bg-background/40 p-6"
+              className="relative flex w-[min(28rem,calc(100vw-4rem))] shrink-0 flex-col rounded-xl border bg-background/40 p-8"
             >
-              <p className="font-mono text-xs text-muted-foreground">
+              <span
+                aria-hidden
+                className="absolute left-8 top-8 font-mono text-[10px] text-muted-foreground/50"
+              >
+                0{ENTRIES.length - i}
+              </span>
+              <p className="mt-6 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
                 {entry.period}
               </p>
-              <h3 className="mt-3 text-xl font-semibold leading-tight">
+              <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-tight">
                 {entry.role}
               </h3>
               <p className="mt-1 text-sm text-muted-foreground">
                 {entry.company}
               </p>
-              <p className="mt-4 text-sm leading-relaxed">{entry.impact}</p>
+              <p className="mt-5 text-sm leading-relaxed text-foreground/85">
+                {entry.impact}
+              </p>
             </article>
           ))}
+          {/* Trailing spacer so the last card always animates past the viewport edge,
+              guaranteeing a non-zero pin distance on wide screens. */}
+          <div aria-hidden className="w-[40vw] shrink-0" />
         </div>
       ) : (
         <ol className="mt-6 space-y-6">
