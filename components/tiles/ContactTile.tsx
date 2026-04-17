@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Check } from "lucide-react";
-import { useState } from "react";
+import { Children, cloneElement, isValidElement, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { contactSchema, type ContactPayload } from "@/lib/contact-schema";
@@ -90,7 +90,7 @@ export function ContactTile() {
         noValidate
         className="mt-4 flex flex-1 flex-col gap-3"
       >
-        <Field label="Name" error={errors.name?.message}>
+        <Field name="name" label="Name" error={errors.name?.message}>
           <input
             type="text"
             autoComplete="name"
@@ -99,7 +99,7 @@ export function ContactTile() {
           />
         </Field>
 
-        <Field label="Email" error={errors.email?.message}>
+        <Field name="email" label="Email" error={errors.email?.message}>
           <input
             type="email"
             autoComplete="email"
@@ -108,7 +108,7 @@ export function ContactTile() {
           />
         </Field>
 
-        <Field label="What's up?" error={errors.message?.message}>
+        <Field name="message" label="What's up?" error={errors.message?.message}>
           <textarea
             rows={4}
             {...register("message")}
@@ -154,23 +154,41 @@ export function ContactTile() {
 const inputClasses =
   "w-full rounded-md border border-border bg-background/40 px-3 py-2 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
+type FieldInputProps = {
+  "aria-invalid"?: boolean;
+  "aria-describedby"?: string;
+};
+
 function Field({
+  name,
   label,
   error,
   children,
 }: {
+  name: string;
   label: string;
   error?: string;
   children: React.ReactNode;
 }) {
+  const errorId = `${name}-error`;
+  const only = Children.only(children);
+  const input = isValidElement<FieldInputProps>(only)
+    ? cloneElement(only, {
+        "aria-invalid": error ? true : undefined,
+        "aria-describedby": error ? errorId : undefined,
+      })
+    : only;
+
   return (
     <label className="flex flex-col gap-1.5">
       <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
         {label}
       </span>
-      {children}
+      {input}
       {error && (
-        <span className="text-[11px] text-[var(--destructive)]">{error}</span>
+        <span id={errorId} className="text-[11px] text-[var(--destructive)]">
+          {error}
+        </span>
       )}
     </label>
   );

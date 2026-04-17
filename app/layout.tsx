@@ -1,12 +1,17 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 
 import { CommandPalette } from "@/components/CommandPalette";
+import { SkipToContent } from "@/components/SkipToContent";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { getAllCaseStudies } from "@/lib/case-studies";
 
 import "./globals.css";
+
+const PLAUSIBLE_DOMAIN = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -88,10 +93,20 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <ThemeProvider>
           <TooltipProvider>
+            <SkipToContent />
             {children}
             <CommandPalette caseStudies={paletteCaseStudies} />
           </TooltipProvider>
         </ThemeProvider>
+        <Analytics />
+        {PLAUSIBLE_DOMAIN && (
+          <Script
+            defer
+            strategy="afterInteractive"
+            data-domain={PLAUSIBLE_DOMAIN}
+            src="https://plausible.io/js/script.js"
+          />
+        )}
       </body>
     </html>
   );

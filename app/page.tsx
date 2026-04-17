@@ -53,7 +53,7 @@ export default async function Home() {
   ).filter((s): s is (typeof all)[number] => Boolean(s));
 
   return (
-    <main className="min-h-screen px-6 py-8 lg:px-8 lg:py-12">
+    <main id="content" className="min-h-screen px-6 py-8 lg:px-8 lg:py-12">
       <JsonLd data={personJsonLd} />
       <div className="mx-auto flex max-w-[1280px] flex-col gap-8">
         <header className="flex items-center justify-between">

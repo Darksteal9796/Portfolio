@@ -22,9 +22,9 @@ Kickoff: 2026-04-18 · Target: 4 weeks · Spec: [docs/specs/personal-website-spe
 | P8 | Contact form | completed | 7 | med | zod schema shared client+server, in-memory rate-limit 5/hr/IP, Resend (no-op when RESEND_API_KEY missing), honeypot field, success/error inline states |
 | P9 | Command palette (⌘K) | completed | 3 | low | cmdk via shadcn CommandDialog; keyboard handler at layout level; sections + case studies + theme + resume. cmdk internals flaky in jsdom — keyboard-open test reduced to mount-sanity |
 | P10 | SEO, sitemap, OG images | completed | 7 | low | Native Next 16 sitemap/robots conventions (no next-sitemap dep). Dynamic OG via ImageResponse. Person + CreativeWork JSON-LD. metadataBase + canonical. |
-| P11 | Analytics | pending | ~3 | low | Vercel Analytics SDK + Plausible script |
-| P12 | Performance pass | pending | ~2 | med | Lighthouse CI in GH Actions |
-| P13 | Accessibility pass | pending | ~3 | low | axe + NVDA walkthrough |
+| P11 | Analytics | completed | 6 | low | @vercel/analytics mounted via <Analytics/>. Plausible script (gated on NEXT_PUBLIC_PLAUSIBLE_DOMAIN). track() fires to both providers. All 6 spec events wired (case_study_open, resume_download, contact_submit, scroll_depth_75, theme_toggle, command_palette_open). |
+| P12 | Performance pass | completed | 3 | med | Most checklist items already in place (R3F dynamic+gated, no raw images, Plausible afterInteractive, SSG case studies). Added Lighthouse CI: lighthouserc.json (desktop preset, 3 runs, perf ≥ 0.95 error, others warn), .github/workflows/lighthouse.yml (PR + push main), @lhci/cli dev dep, pnpm lighthouse script. |
+| P13 | Accessibility pass | completed | 5 | low | SkipToContent (sr-only → focus-visible) as first focusable, id="content" on both main landmarks, ContactTile fields now wire aria-invalid + aria-describedby → error span, case study prev/next nav has aria-label. Pre-existing good: canvas aria-hidden (P3), reduced-motion gates (P3/P6), all interactive elements have focus-visible:ring, StackTile tooltip triggers have aria-label, honeypot hidden from AT. |
 | P14 | Deploy to production | pending | N/A | high | DNS cutover; confirm domain |
 | P15 | Migrate to Cloudflare Pages (optional) | pending | ~2 | med | Only if bandwidth matters |
 

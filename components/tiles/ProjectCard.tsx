@@ -1,7 +1,10 @@
+"use client";
+
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 import type { CaseStudyFrontmatter } from "@/lib/case-studies";
+import { track } from "@/lib/track";
 
 export function ProjectCard({ frontmatter }: { frontmatter: CaseStudyFrontmatter }) {
   const titleName = `case-study-title-${frontmatter.slug}`;
@@ -10,6 +13,9 @@ export function ProjectCard({ frontmatter }: { frontmatter: CaseStudyFrontmatter
   return (
     <Link
       href={`/work/${frontmatter.slug}`}
+      onClick={() =>
+        track("case_study_open", { slug: frontmatter.slug })
+      }
       className="group relative flex h-full flex-col justify-between gap-6 focus-visible:outline-none"
       style={{ viewTransitionName: frameName }}
     >

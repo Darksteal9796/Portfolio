@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { JsonLd } from "@/components/JsonLd";
+import { ScrollDepthTracker } from "@/components/ScrollDepthTracker";
 import {
   getAllCaseStudies,
   getCaseStudyBySlug,
@@ -82,8 +83,9 @@ export default async function CaseStudyPage({
   const frameName = `case-study-frame-${slug}`;
 
   return (
-    <main className="min-h-screen px-6 py-8 lg:px-8 lg:py-12">
+    <main id="content" className="min-h-screen px-6 py-8 lg:px-8 lg:py-12">
       <JsonLd data={creativeWorkJsonLd(study.frontmatter)} />
+      <ScrollDepthTracker props={{ slug }} />
       <article className="mx-auto max-w-3xl">
         <Link
           href="/#projects"
@@ -139,7 +141,10 @@ export default async function CaseStudyPage({
           <MDXRemote source={study.body} />
         </div>
 
-        <nav className="mt-16 flex items-center justify-between gap-4 border-t border-border pt-6">
+        <nav
+          aria-label="Case studies"
+          className="mt-16 flex items-center justify-between gap-4 border-t border-border pt-6"
+        >
           {prev ? (
             <Link
               href={`/work/${prev.frontmatter.slug}`}
