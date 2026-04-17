@@ -54,10 +54,19 @@ export function ExperienceTile() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // Minimum 600px of travel so the pin has real "weight" even on very wide
-      // viewports where cards + trailing spacer still barely exceed the section.
+      // Pin only for as long as the track actually needs to travel. Adding a
+      // big floor here would reserve a screen of empty vertical space below the
+      // pinned section — reads as a "black gap" to the user.
+      // section.clientWidth includes horizontal padding; the track only has
+      // (clientWidth - paddingL - paddingR) of visible room.
+      const visibleTrackWidth = () => {
+        const style = window.getComputedStyle(section);
+        const padL = parseFloat(style.paddingLeft) || 0;
+        const padR = parseFloat(style.paddingRight) || 0;
+        return section.clientWidth - padL - padR;
+      };
       const distance = () =>
-        Math.max(600, track.scrollWidth - section.clientWidth + 48);
+        Math.max(0, track.scrollWidth - visibleTrackWidth());
 
       gsap.to(track, {
         x: () => -distance(),
@@ -110,7 +119,7 @@ export function ExperienceTile() {
           {ENTRIES.map((entry, i) => (
             <article
               key={entry.company}
-              className="relative flex w-[min(28rem,calc(100vw-4rem))] shrink-0 flex-col rounded-xl border bg-background/40 p-8"
+              className="relative flex w-[min(30rem,calc(100vw-4rem))] shrink-0 flex-col rounded-xl border bg-background/40 p-8"
             >
               <span
                 aria-hidden
@@ -132,9 +141,6 @@ export function ExperienceTile() {
               </p>
             </article>
           ))}
-          {/* Trailing spacer so the last card always animates past the viewport edge,
-              guaranteeing a non-zero pin distance on wide screens. */}
-          <div aria-hidden className="w-[40vw] shrink-0" />
         </div>
       ) : (
         <ol className="mt-6 space-y-6">
