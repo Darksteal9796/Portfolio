@@ -68,10 +68,6 @@ export function ExperienceTile() {
           end: () => `+=${distance()}`,
           scrub: true,
           pin: true,
-          // "transform" pin plays nicely inside a flex-col parent. Default
-          // "fixed" pin-spacer misreads height in flex contexts, which lets
-          // the section overlap subsequent content after release.
-          pinType: "transform",
           invalidateOnRefresh: true,
         },
       });

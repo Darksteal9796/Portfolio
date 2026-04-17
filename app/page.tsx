@@ -55,6 +55,7 @@ export default async function Home() {
   return (
     <main id="content" className="min-h-screen px-6 py-8 lg:px-8 lg:py-12">
       <JsonLd data={personJsonLd} />
+      {/* Top group uses flex gap for spacing. */}
       <div className="mx-auto flex max-w-[1280px] flex-col gap-8">
         <header className="flex items-center justify-between">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
@@ -78,9 +79,17 @@ export default async function Home() {
             ))}
           </BentoGrid>
         </section>
+      </div>
 
+      {/* ExperienceTile sits OUTSIDE any flex container. GSAP ScrollTrigger's
+          pin-spacer miscalculates its own height inside a flex-col parent,
+          which causes the pinned section to overlap subsequent content on
+          release. Plain block layout avoids the issue entirely. */}
+      <div className="mx-auto mt-8 max-w-[1280px]">
         <ExperienceTile />
+      </div>
 
+      <div className="mx-auto mt-8 max-w-[1280px]">
         <BentoGrid className="px-0">
           <BentoTile size="sm">
             <NowTile />
