@@ -68,6 +68,12 @@ export function ExperienceTile() {
           end: () => `+=${distance()}`,
           scrub: true,
           pin: true,
+          // pinSpacing: false lets the tiles below the Experience section stay
+          // in their natural scroll position while the section is pinned,
+          // instead of GSAP inserting an empty pin-spacer that reads as a
+          // black gap. The section sits on top; content below scrolls up
+          // underneath its bottom edge as the user scrolls through the pin.
+          pinSpacing: false,
           invalidateOnRefresh: true,
         },
       });
