@@ -14,8 +14,8 @@ Kickoff: 2026-04-18 · Target: 4 weeks · Spec: [docs/specs/personal-website-spe
 | P0 | Project init | completed | ~20 | low | Next 16 (not 15), scaffolded via /tmp; commit pending |
 | P1 | Design system tokens | completed | 4 | low | Tailwind v4 → tokens in globals.css; useSyncExternalStore for theme |
 | P2 | Bento grid primitives | completed | 4 | low | BentoGrid, BentoTile, /design preview + test; demo uses 5 tiles (sm ×2) to fill rows cleanly |
-| P3 | Hero + WebGL particle field | pending | ~5 | med | R3F dynamic import, reduced-motion fallback |
-| P4 | Static tiles (Now, Stack, Location, Resume) | pending | ~5 | low | Placeholder resume.pdf needed from Gautam |
+| P3 | Hero + WebGL particle field | completed | 7 | med | R3F dynamic + desktop + reduced-motion gate; needed @types/three; particle positions at module scope (purity lint) |
+| P4 | Static tiles (Now, Stack, Location, Resume) | completed | 8 | low | marked + @icons-pack/react-simple-icons added; AWS/Twilio use lucide fallbacks; 531B placeholder resume.pdf generated; TooltipProvider wired at layout |
 | P5 | GitHub tile (server, cached) | pending | ~2 | med | Needs GITHUB_TOKEN; GraphQL contribs API |
 | P6 | Experience timeline (GSAP) | pending | ~2 | med | ScrollTrigger pin, mobile fallback |
 | P7 | Project cards + case study pages | pending | ~8 | med | MDX via contentlayer2 OR next-mdx-remote — check N16 compat |

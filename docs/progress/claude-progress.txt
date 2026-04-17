@@ -7,3 +7,8 @@
 2026-04-18 02:30  |  P1 review — applied 2 should-fix items: useMemo wrap on ThemeProvider value + --destructive hex conversion.
 2026-04-18 02:32  |  /test — added vitest + RTL + jsdom; 12 tests for ThemeProvider + ThemeToggle, all green (805ms).
 2026-04-18 02:35  |  P2 completed — BentoGrid + BentoTile primitives, /design preview page, 6 BentoTile tests. 18/18 tests green. Build adds /design static route.
+2026-04-18 02:40  |  Committed P0+P1+P2+tests (ea33b82). Un-tracked .claude/settings.local.json.
+2026-04-18 02:45  |  Installed gh CLI, set global git identity, pushed main to https://github.com/Darksteal9796/Portfolio (public).
+2026-04-18 02:55  |  P3 completed — HeroTile + HeroBackground (dynamic R3F) + ParticleField (2000 particles, violet, cursor parallax) + useMediaQuery. Reduced-motion + desktop-only gating. Replaced Vercel scaffold on /. 22/22 tests green. Build adds @types/three.
+2026-04-18 03:02  |  P3 perf polish — killed backdrop-blur on secondary CTA, capped Canvas dpr to [1, 1.5], fixed accumulated rotation bug.
+2026-04-18 03:15  |  P4 completed — NowTile (server, marked), StackTile (client, base-ui tooltips, 8 icons), LocationTile (client, useSyncExternalStore clock), ResumeTile (client, track stub). Layout wrapped in TooltipProvider. Mounted all 4 tiles in BentoGrid on /. 531-byte placeholder PDF written. 30/30 tests green. Added deps: marked, @icons-pack/react-simple-icons. AWS + Twilio fall back to lucide (Simple Icons dropped both).
