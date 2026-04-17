@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm --version)",
+      "Bash(corepack --version)",
+      "Bash(corepack enable *)",
+      "Bash(pnpm create *)",
+      "Read(//private/tmp/portfolio-scaffold/**)",
+      "Bash(rm -rf .git CLAUDE.md .next)",
+      "Bash(mv /tmp/portfolio-scaffold/.gitignore .)",
+      "Bash(mv /tmp/portfolio-scaffold/AGENTS.md .)",
+      "Bash(mv /tmp/portfolio-scaffold/README.md .)",
+      "Bash(mv /tmp/portfolio-scaffold/app .)",
+      "Bash(mv /tmp/portfolio-scaffold/.gitignore /Users/gautamjoshi/dev/Portfolio/)",
+      "Bash(mv /tmp/portfolio-scaffold/AGENTS.md /Users/gautamjoshi/dev/Portfolio/)",
+      "Bash(mv /tmp/portfolio-scaffold/README.md /Users/gautamjoshi/dev/Portfolio/)",
+      "Bash(mv /tmp/portfolio-scaffold/app /Users/gautamjoshi/dev/Portfolio/)",
+      "Bash(mv /tmp/portfolio-scaffold/eslint.config.mjs /Users/gautamjoshi/dev/Portfolio/)",
+      "Bash(pnpm add *)",
+      "Bash(pnpm dlx *)"
+    ]
+  }
+}
