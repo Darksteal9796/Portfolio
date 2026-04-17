@@ -1,3 +1,4 @@
+import { GithubTile } from "@/components/tiles/GithubTile";
 import { HeroTile } from "@/components/tiles/HeroTile";
 import { LocationTile } from "@/components/tiles/LocationTile";
 import { NowTile } from "@/components/tiles/NowTile";
@@ -29,6 +30,9 @@ export default function Home() {
           </BentoTile>
           <BentoTile size="sm">
             <LocationTile />
+          </BentoTile>
+          <BentoTile size="sm">
+            <GithubTile />
           </BentoTile>
           <BentoTile size="sm">
             <ResumeTile />
