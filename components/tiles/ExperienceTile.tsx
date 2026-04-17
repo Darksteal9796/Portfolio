@@ -66,15 +66,25 @@ export function ExperienceTile() {
           trigger: section,
           start: "top top",
           end: () => `+=${distance()}`,
-          scrub: 0.6,
+          scrub: true,
           pin: true,
-          anticipatePin: 1,
+          // "transform" pin plays nicely inside a flex-col parent. Default
+          // "fixed" pin-spacer misreads height in flex contexts, which lets
+          // the section overlap subsequent content after release.
+          pinType: "transform",
           invalidateOnRefresh: true,
         },
       });
     }, section);
 
-    return () => ctx.revert();
+    // Layout can settle after fonts/images resolve; recompute trigger positions
+    // on the next frame to avoid a stuck pin at first paint.
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ctx.revert();
+    };
   }, [pinEligible]);
 
   return (
