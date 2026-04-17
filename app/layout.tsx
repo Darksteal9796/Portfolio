@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
+import { CommandPalette } from "@/components/CommandPalette";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { getAllCaseStudies } from "@/lib/case-studies";
 
 import "./globals.css";
 
@@ -26,11 +28,17 @@ export const metadata: Metadata = {
 // Matches the precedence used in ThemeProvider: localStorage > prefers-color-scheme.
 const themeInitScript = `(function(){try{var s=localStorage.getItem('theme');var m=window.matchMedia('(prefers-color-scheme: dark)').matches;if(s==='dark'||(!s&&m)){document.documentElement.classList.add('dark');}}catch(e){document.documentElement.classList.add('dark');}})();`;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const studies = await getAllCaseStudies();
+  const paletteCaseStudies = studies.map((s) => ({
+    slug: s.frontmatter.slug,
+    title: s.frontmatter.title,
+  }));
+
   return (
     <html
       lang="en"
@@ -42,7 +50,10 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <ThemeProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <TooltipProvider>
+            {children}
+            <CommandPalette caseStudies={paletteCaseStudies} />
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>

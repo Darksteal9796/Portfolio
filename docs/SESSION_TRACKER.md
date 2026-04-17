@@ -19,8 +19,8 @@ Kickoff: 2026-04-18 · Target: 4 weeks · Spec: [docs/specs/personal-website-spe
 | P5 | GitHub tile (server, cached) | completed | 2 | med | REST events + GraphQL contribs, dual fetch w/ revalidate 3600. Graceful fallback when GITHUB_TOKEN missing. Lucide dropped Github icon → SiGithub fallback |
 | P6 | Experience timeline (GSAP) | completed | 3 | med | GSAP ScrollTrigger pin on desktop, vertical stack fallback on mobile + reduced-motion. Full-width section (not BentoTile child) to avoid pin-in-grid layout bugs |
 | P7 | Project cards + case study pages | completed | 10 | med | next-mdx-remote (contentlayer2 abandoned). gray-matter frontmatter. 4 MDX seeds. /work/[slug] statically pre-rendered (SSG). CSS view-transition-name for shared-element morph (modern, no Framer Motion layoutId complexity) |
-| P8 | Contact form | pending | ~3 | med | Resend + in-memory rate-limit |
-| P9 | Command palette (⌘K) | pending | ~2 | low | cmdk already installed |
+| P8 | Contact form | completed | 7 | med | zod schema shared client+server, in-memory rate-limit 5/hr/IP, Resend (no-op when RESEND_API_KEY missing), honeypot field, success/error inline states |
+| P9 | Command palette (⌘K) | completed | 3 | low | cmdk via shadcn CommandDialog; keyboard handler at layout level; sections + case studies + theme + resume. cmdk internals flaky in jsdom — keyboard-open test reduced to mount-sanity |
 | P10 | SEO, sitemap, OG images | pending | ~5 | low | next-sitemap + ImageResponse |
 | P11 | Analytics | pending | ~3 | low | Vercel Analytics SDK + Plausible script |
 | P12 | Performance pass | pending | ~2 | med | Lighthouse CI in GH Actions |

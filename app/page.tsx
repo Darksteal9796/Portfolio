@@ -1,3 +1,4 @@
+import { ContactTile } from "@/components/tiles/ContactTile";
 import { ExperienceTile } from "@/components/tiles/ExperienceTile";
 import { GithubTile } from "@/components/tiles/GithubTile";
 import { HeroTile } from "@/components/tiles/HeroTile";
@@ -51,7 +52,7 @@ export default async function Home() {
           <BentoTile size="sm">
             <NowTile />
           </BentoTile>
-          <BentoTile size="md">
+          <BentoTile size="md" id="stack" className="scroll-mt-24">
             <StackTile />
           </BentoTile>
           <BentoTile size="sm">
@@ -62,6 +63,9 @@ export default async function Home() {
           </BentoTile>
           <BentoTile size="sm">
             <ResumeTile />
+          </BentoTile>
+          <BentoTile size="md" id="contact" className="scroll-mt-24">
+            <ContactTile />
           </BentoTile>
         </BentoGrid>
       </div>
