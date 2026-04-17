@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import {
+  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -75,11 +76,12 @@ export function CommandPalette({
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
-      <CommandInput placeholder="Jump to a section, project, or action…" />
-      <CommandList>
-        <CommandEmpty>No matches.</CommandEmpty>
+      <Command>
+        <CommandInput placeholder="Jump to a section, project, or action…" />
+        <CommandList>
+          <CommandEmpty>No matches.</CommandEmpty>
 
-        <CommandGroup heading="Sections">
+          <CommandGroup heading="Sections">
           <CommandItem
             onSelect={() =>
               run(() => window.scrollTo({ top: 0, behavior: "smooth" }))
@@ -133,7 +135,8 @@ export function CommandPalette({
             <CommandShortcut>.pdf</CommandShortcut>
           </CommandItem>
         </CommandGroup>
-      </CommandList>
+        </CommandList>
+      </Command>
     </CommandDialog>
   );
 }

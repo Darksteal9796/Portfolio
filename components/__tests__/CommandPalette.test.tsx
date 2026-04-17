@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("next/navigation", () => ({
@@ -15,19 +16,41 @@ const CASE_STUDIES = [
   { slug: "ai-best-buddy", title: "AI Best Buddy" },
 ];
 
-// The palette renders its content inside a portal-backed dialog that is only
-// mounted when open. Testing the cmdk tree behind the dialog is fiddly in
-// jsdom (cmdk's internal store uses browser APIs that aren't polyfilled), so
-// these tests verify the component mounts cleanly while closed — the richer
-// keyboard + navigation flow is verified manually in the browser.
+function renderPalette() {
+  return render(
+    <ThemeProvider>
+      <CommandPalette caseStudies={CASE_STUDIES} />
+    </ThemeProvider>,
+  );
+}
 
 describe("CommandPalette", () => {
-  it("mounts without throwing and renders nothing while closed", () => {
-    render(
-      <ThemeProvider>
-        <CommandPalette caseStudies={CASE_STUDIES} />
-      </ThemeProvider>,
-    );
+  it("renders nothing visible while closed", () => {
+    renderPalette();
     expect(screen.queryByPlaceholderText(/Jump to a section/i)).toBeNull();
+  });
+
+  it("opens on Ctrl+K and lists sections, case studies, and actions", async () => {
+    const user = userEvent.setup();
+    renderPalette();
+
+    await user.keyboard("{Control>}k{/Control}");
+
+    expect(
+      await screen.findByPlaceholderText(/Jump to a section/i),
+    ).toBeInTheDocument();
+
+    for (const label of [
+      "Hero",
+      "Projects",
+      "Stack",
+      "Contact",
+      "Autonomous Revenue Engine",
+      "AI Best Buddy",
+    ]) {
+      expect(screen.getByText(label)).toBeInTheDocument();
+    }
+
+    expect(screen.getByText(/Download resume/i)).toBeInTheDocument();
   });
 });
