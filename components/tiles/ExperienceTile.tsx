@@ -54,26 +54,29 @@ export function ExperienceTile() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // Minimum 600px of travel so the pin has real "weight" even on very wide
-      // viewports where cards + trailing spacer still barely exceed the section.
+      // section.clientWidth includes horizontal padding; the track only has
+      // (clientWidth - paddingL - paddingR) of visible room.
+      const visibleTrackWidth = () => {
+        const style = window.getComputedStyle(section);
+        const padL = parseFloat(style.paddingLeft) || 0;
+        const padR = parseFloat(style.paddingRight) || 0;
+        return section.clientWidth - padL - padR;
+      };
       const distance = () =>
-        Math.max(600, track.scrollWidth - section.clientWidth + 48);
+        Math.max(0, track.scrollWidth - visibleTrackWidth());
 
+      // No pin. Track translates horizontally as the section scrolls through
+      // the viewport. Start: section top reaches 75% viewport height (cards
+      // just entering view). End: section bottom reaches 25% viewport height
+      // (cards about to leave). Scrub ties progress to scroll linearly.
       gsap.to(track, {
         x: () => -distance(),
         ease: "none",
         scrollTrigger: {
           trigger: section,
-          start: "top top",
-          end: () => `+=${distance()}`,
+          start: "top 75%",
+          end: "bottom 25%",
           scrub: true,
-          pin: true,
-          // pinSpacing: false lets the tiles below the Experience section stay
-          // in their natural scroll position while the section is pinned,
-          // instead of GSAP inserting an empty pin-spacer that reads as a
-          // black gap. The section sits on top; content below scrolls up
-          // underneath its bottom edge as the user scrolls through the pin.
-          pinSpacing: false,
           invalidateOnRefresh: true,
         },
       });
@@ -116,18 +119,18 @@ export function ExperienceTile() {
           {ENTRIES.map((entry, i) => (
             <article
               key={entry.company}
-              className="relative flex w-[min(28rem,calc(100vw-4rem))] shrink-0 flex-col rounded-xl border bg-background/40 p-8"
+              className="group relative flex w-[min(28rem,calc(100vw-4rem))] shrink-0 flex-col rounded-xl border bg-background/40 p-8 transition hover:border-primary/40 hover:bg-background/60 hover:ring-2 hover:ring-accent/30"
             >
               <span
                 aria-hidden
-                className="absolute left-8 top-8 font-mono text-[10px] text-muted-foreground/50"
+                className="absolute left-8 top-8 font-mono text-[10px] text-muted-foreground/50 transition group-hover:text-primary/70"
               >
                 0{ENTRIES.length - i}
               </span>
               <p className="mt-6 font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
                 {entry.period}
               </p>
-              <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-tight">
+              <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-tight transition group-hover:text-primary">
                 {entry.role}
               </h3>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -138,9 +141,6 @@ export function ExperienceTile() {
               </p>
             </article>
           ))}
-          {/* Trailing spacer so the last card always animates past the viewport edge,
-              guaranteeing a non-zero pin distance on wide screens. */}
-          <div aria-hidden className="w-[40vw] shrink-0" />
         </div>
       ) : (
         <ol className="mt-6 space-y-6">
